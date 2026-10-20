@@ -26,7 +26,7 @@ def fetch_jobs():
         if "results" not in data:
             print("API error on page", page)
             print("HTTP status:", response.status_code)
-            print("Message:", data.get("error", "no message"))
+            print("Message:", data.get("display", "no message"))
             raise SystemExit(1)
 
         for job in data["results"]:

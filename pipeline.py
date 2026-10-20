@@ -20,7 +20,14 @@ def fetch_jobs():
     rows = []
     for page in range(1, 4):
         url = f"https://api.adzuna.com/v1/api/jobs/in/search/{page}"
-        data = requests.get(url, params=params).json()
+        response = requests.get(url, params=params)
+        data = response.json()
+
+        if "results" not in data:
+            print("API error on page", page)
+            print("HTTP status:", response.status_code)
+            print("Message:", data.get("error", "no message"))
+            raise SystemExit(1)
 
         for job in data["results"]:
             rows.append({
